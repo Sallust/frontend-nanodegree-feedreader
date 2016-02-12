@@ -162,5 +162,59 @@ $(function() {
          });
 
     });
+
+    describe('Each entry', function() {
+
+         beforeEach(function(done) {
+            loadFeed(0, function() {
+                done();
+            });
+        });
+
+        it('has a description', function() {
+            //expect each of them to have a description at the tag level
+        }) ;
+
+        it('is getting added to the list', function() {
+
+
+        })
+    })
+
+    describe('The input', function() {
+
+
+        it('is getting captured on submit', function() {
+
+        })
+
+        it('is generating a string')
+    });
+
+    describe('The AJAX calls', function() {
+
+
+        it('are not getting called ridiculously', function() {
+
+
+
+        });
+
+        it('are returning data with keys full', function() {
+
+
+
+        });
+
+        it('are not returning errors', function() {
+
+            
+        })
+
+
+
+
+    })
+
         
 }());

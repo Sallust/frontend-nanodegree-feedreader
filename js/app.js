@@ -10,7 +10,7 @@
 var allFeeds = [
     {
         name: 'Udacity Blog',
-        url: 'http://blog.udacity.com/feed'
+        url: 'http://blog.udaxxcity.com/feed'
     }, {
         name: 'CSS Tricks',
         url: 'http://css-tricks.com/feed'
@@ -20,7 +20,11 @@ var allFeeds = [
     }, {
         name: 'Linear Digressions',
         url: 'http://feeds.feedburner.com/udacity-linear-digressions'
+    },{
+        name: 'Webdesigner Depot',
+        url: 'http://feeds2.feedburner.com/webdesignerdepot'
     }
+
 ];
 
 /* This function starts up our application. The Google Feed
@@ -50,7 +54,8 @@ function init() {
        data: JSON.stringify({url: feedUrl}),
        contentType:"application/json",
        success: function (result, status){
-
+            console.log(JSON.stringify({url: feedUrl}))
+                    console.log(result)
                  var container = $('.feed'),
                      title = $('.header-title'),
                      entries = result.feed.entries,
@@ -74,6 +79,9 @@ function init() {
                  }
                },
        error: function (result, status, err){
+        console.log(result);
+        console.log(status);
+        console.log(err);
                  //run only the callback without attempting to parse result due to error
                  if (cb) {
                      cb();
@@ -118,6 +126,7 @@ $(function() {
      * (following the link) from occurring.
      */
     feedList.on('click', 'a', function() {
+        console.log(this)
         var item = $(this);
 
         $('body').addClass('menu-hidden');
