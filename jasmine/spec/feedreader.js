@@ -32,30 +32,86 @@ $(function() {
          * and that the URL is not empty.
          */
 
+         it('have urls',function() {
+            for (var i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].url).toBeDefined();
+                expect(allFeeds[i].url.length).not.toBe(0);
+ 
+            }
+         });
+
+
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
+
+         it('have names',function() {
+            for (var i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].name).toBeDefined();
+                expect(allFeeds[i].name.length).not.toBe(0);
+ 
+            }
+         });
     });
 
-
     /* TODO: Write a new test suite named "The menu" */
-
+    describe('The menu', function() {
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
+            var slideMenu = $('.slide-menu').get(0);
+            var $slide = $('.slide-menu');
+            var body = $('body');
 
-         /* TODO: Write a test that ensures the menu changes
+         beforeEach(function() {
+/*            var slideMenu = document.querySelector('.slide-menu');
+*/        
+        });
+
+     /*    I broke the allFeeds var from the console and Jasmine 
+            still said test was passing? So by default is it only
+            checking onload?
+            */
+
+        it('element is hidden by default', function() {
+
+         /*   Test if the right bound of the slide-menu element is equal to or less
+         than 0 */
+            expect(slideMenu.getBoundingClientRect().right).not.toBeGreaterThan(0);
+        });
+
+        /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
 
-    /* TODO: Write a new test suite named "Initial Entries" */
 
+        it('changes visibility when the menu icon is clicked', function() {
+            var menuIcon = $('.menu-icon-link');
+            menuIcon.click();
+      /*     console.log(slideMenu.getBoundingClientRect().right)*/
+            expect(body.hasClass('menu-hidden')).not.toBeTruthy();
+
+            menuIcon.click();
+            expect(body.hasClass('menu-hidden')).toBeTruthy();
+
+           /* $._data( menuIcon[0], "events" );*/
+           /* menuIcon.trigger('click');
+            expect(slideMenu.getBoundingClientRect().right).not.toBeGreaterThan(0);*/
+
+        });
+
+    });
+         
+
+
+    /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function() {
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
@@ -63,10 +119,48 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+                done();
+            });
+        });
 
-        /* TODO: Write a test that ensures when a new feed is loaded
+        it('elements (at least one) have been appended the feed container', function(done) {
+            var container = $('.feed');
+            expect(container.children().length).toBeGreaterThan(0);
+
+            done();
+        });
+    });
+
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
+/* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        var container = $('.feed');
+        var firstRun;
+
+        beforeEach(function(done) {
+            loadFeed(1, function() {
+                firstRun = container.children().first().text();
+                console.log(firstRun);
+                done();
+            });
+        });
+
+         it('is different from the previous one', function(done) {
+           
+            loadFeed(2, function() {
+                var secondRun = container.children().first().text();
+                expect(secondRun).not.toEqual(firstRun);
+                done();
+            });
+
+
+         });
+
+    });
+        
 }());
