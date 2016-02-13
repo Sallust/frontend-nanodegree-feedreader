@@ -131,6 +131,11 @@ $(function() {
 
             done();
         });
+
+
+
+
+
     });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
@@ -145,7 +150,6 @@ $(function() {
         beforeEach(function(done) {
             loadFeed(1, function() {
                 firstRun = container.children().first().text();
-                console.log(firstRun);
                 done();
             });
         });
@@ -165,20 +169,47 @@ $(function() {
 
     describe('Each entry', function() {
 
+        var length;
+        var container = $('.feed');
+
          beforeEach(function(done) {
             loadFeed(0, function() {
+
                 done();
             });
         });
 
-        it('has a description', function() {
+
+
+        it('has a description and link', function(done) {
+            var container = $('.feed');
+            container.children().each(function(index, element) {
+
+                
+                var pTag = $(element).find('p');
+                var aTag = $(element);
+                expect(pTag.text()).not.toBe(false);//i.e. an empty string or undefined
+                expect(aTag.attr("href")).not.toBe(false);
+            });
+
+           /* expect(container.children().length).toBeGreaterThan(0);*/
+
+            done();
             //expect each of them to have a description at the tag level
         }) ;
 
-        it('is getting added to the list', function() {
+        it(', at least 8, have been added', function() {
+
 
 
         })
+        it('has a link', function() {
+
+        });
+        it('shows more info on hover', function() {
+
+        })
+
     })
 
     describe('The input', function() {
