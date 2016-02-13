@@ -196,41 +196,153 @@ $(function() {
 
     });
 
-    describe('The input', function() {
+    /*describe('The input', function() {
         var input = $('#my-input');
         var container = $('.feed');
 
-        var length;
+        var initialLength;
         var initialFilter= view.currentFilter;
 
         beforeEach(function(done) {
-            loadFeed(1, function() {
+            loadFeed(0, function() {
                 var initialLength = container.children().length;
-
+                input.val('udacity');
                 done();
             });
         });
 
+        afterEach(function(){
+            input.val('');
+        });
 
         it('is changing the filter variable', function(done) {
-            input.val('test');
-            expect(view.currentFilter).not.toEqual(before);
-            input.val('');
+            expect(view.currentFilter).not.toEqual(initialFilter);
             done();
         });
 
-        it('is reducing the number of entries', function() {
+        it('is reducing the number of entries', function(done) {
+            var newLength = container.children().length;
+            expect(newLength).not.toEqual(initialLength);
+        });
+
+        it('is generating autocomplete results', function() {
+           /* the jQuery autocomplete widget populates its results in a
+            ul with the class ui-autocomplete */
+        /*    var autocompleteUl = $('.ui-autocomplete');
+            expect(autocompleteUl.children().length).toBeGreaterThan(0);
+        });
+    });
+*/
+    describe('my ajax', function() {
+        var MockResponse = {
+            status: 200,
+            responseText:  JSON.stringify ({
+                "feed": {
+                    "entries": [{
+                        "link": "http://awesomeness.com",
+                        "title": "Really Interesting Article",
+                        "description": "Interesting description"
+                    },{
+                        "link": "http://awesomeness.com",
+                        "title": "Really Interesting Article",
+                        "description": "Interesting description"
+                    }]
+                }
+            })
+
+        };
+
+        var request,
+            onSuccess,
+            onFail,
+            test;
+
+        beforeEach(function() {
+            jasmine.Ajax.install();
+
+            onSuccess = jasmine.createSpy('success');
+            onFail = jasmine.createSpy('error');
+            var feedUrl = 'http://blog.udacity.com/feed';
+            var feedName = 'Udacity Blog';
+            var cb = function(){};
+
+            $.ajax({
+               type: "POST",
+               url: 'https://rsstojson.udacity.com/parseFeed',
+               data: JSON.stringify({url: feedUrl}),
+               contentType:"application/json",
+               success: onSuccess ,
+
+               function (result, status){
+                    console.log(JSON.stringify({url: feedUrl}))
+                            console.log(result)
+                         var container = $('.feed'),
+                             title = $('.header-title'),
+                             entries = result.feed.entries,
+                             entriesLen = entries.length,
+                             entryTemplate = Handlebars.compile($('.tpl-entry').html());
+
+                         title.html(feedName);   // Set the header text
+                         container.empty();      // Empty out all previous entries
+
+                         /* Loop through the entries we just loaded via the Google
+                          * Feed Reader API. We'll then parse that entry against the
+                          * entryTemplate (created above using Handlebars) and append
+                          * the resulting HTML to the list of entries on the page.
+                          */
+                          entries.forEach(function(entry) {
+                             container.append(entryTemplate(entry));
+                         });
+
+                         if (cb) {
+                             cb();
+                         }
+                       },
+               error: function (result, status, err){
+                         //run only the callback without attempting to parse result due to error
+                         if (cb) {
+                             cb();
+                         }
+                       },
+               dataType: "json"
+             });
+
+            request = jasmine.Ajax.requests.mostRecent();
+            expect(request.url).toBe('https://rsstojson.udacity.com/parseFeed');
+            expect(request.method).toBe('POST');
+            expect(request.data()).toEqual({"url":"http://blog.udacity.com/feed"});
+         });
+            
+
+        describe('on success', function() {
+            beforeEach(function() {
+                request.respondWith(MockResponse);
+            });
+
+            it('calls on sucesss with correct data', function() {
+                expect(onSuccess).toHaveBeenCalled();
+                console.log(onSuccess.calls.mostRecent().args)
+
+            });
 
 
-        })
 
+        });
+/*
+            jasmine.Ajax.stubRequest('YOUR_URL_HERE').andReturn({
+                responseText: 'YOUR_RAW_STUBBED_DATA_HERE'
+            });*/
+       
 
-        it('is generating an autocomplete box', function() {
+        afterEach(function() {
+            jasmine.Ajax.uninstall();
+        });
 
-        })
 
 
     });
+
+
 
     describe('The AJAX calls', function() {
 
