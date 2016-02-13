@@ -179,50 +179,61 @@ $(function() {
             });
         });
 
-
-
         it('has a description and link', function(done) {
-            var container = $('.feed');
             container.children().each(function(index, element) {
-
-                
                 var pTag = $(element).find('p');
                 var aTag = $(element);
                 expect(pTag.text()).not.toBe(false);//i.e. an empty string or undefined
                 expect(aTag.attr("href")).not.toBe(false);
             });
-
-           /* expect(container.children().length).toBeGreaterThan(0);*/
-
             done();
             //expect each of them to have a description at the tag level
         }) ;
-
-        it(', at least 8, have been added', function() {
-
-
-
-        })
-        it('has a link', function() {
-
+        it(', at least 8, have been added', function(done) {
+            expect(container.children().length).toBeGreaterThan(7);
+            done();
         });
-        it('shows more info on hover', function() {
 
-        })
-
-    })
+    });
 
     describe('The input', function() {
+        var input = $('#my-input');
+        var container = $('.feed');
+
+        var length;
+        var initialFilter= view.currentFilter;
+
+        beforeEach(function(done) {
+            loadFeed(1, function() {
+                var initialLength = container.children().length;
+
+                done();
+            });
+        });
 
 
-        it('is getting captured on submit', function() {
+        it('is changing the filter variable', function(done) {
+            input.val('test');
+            expect(view.currentFilter).not.toEqual(before);
+            input.val('');
+            done();
+        });
+
+        it('is reducing the number of entries', function() {
+
 
         })
 
-        it('is generating a string')
+
+        it('is generating an autocomplete box', function() {
+
+        })
+
+
     });
 
     describe('The AJAX calls', function() {
+
 
 
         it('are not getting called ridiculously', function() {
