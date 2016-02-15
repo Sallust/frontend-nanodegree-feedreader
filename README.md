@@ -3,7 +3,9 @@
 
 ##How to view this project!
 *	Open the index.html file
-*	The app will start running and display links to the Udacity Blog
+*	All dependencies included (gulp used only for browser-sync)
+*	The app will start running and display the RSS feed for the Udacity blog
+*	Additional feeds are accessible by clicking the hamburger icon
 *	Jasmine will immediately start running and generate results at the bottom of the screen
 *	Sadly, some of them will fail.
 
