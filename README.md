@@ -1,5 +1,5 @@
 # Feed Reader Testing
-	Using [Jasmine](http://jasmine.github.io/) to test functionality of a web-based application that reads RSS feeds
+Using [Jasmine](http://jasmine.github.io/) to test functionality of a web-based application that reads RSS feeds
 
 ##How to view this project!
 *	Open the index.html file
