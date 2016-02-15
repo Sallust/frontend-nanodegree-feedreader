@@ -16,6 +16,8 @@
         <script src="jasmine/lib/jasmine-2.1.2/jasmine.js"></script>
         <script src="jasmine/lib/jasmine-2.1.2/jasmine-html.js"></script>
         <script src="jasmine/lib/jasmine-2.1.2/boot.js"></script>
+        <script src="jasmine/lib/jasmine-2.1.2/mock-ajax.js"></script>
+  
     </head>
     <body class="menu-hidden">
         <div class="header">
@@ -24,6 +26,7 @@
             </a>
 
             <h1 class="header-title">Feeds</h1>
+            <input type="text" syle="color:black"placeholder="Type here to Filter by Name" class="form-control my-input" id="autocomplete">
         </div>
 
         <div class="slide-menu">
@@ -36,7 +39,7 @@
             <a class="entry-link" href="{{link}}">
                 <article class="entry">
                     <h2>{{title}}</h2>
-                    <p>{{description}}</p>
+                    <p class="description">{{{description}}}</p>
                 </article>
             </a>
         </script>
